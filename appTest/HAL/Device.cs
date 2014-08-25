@@ -11,6 +11,7 @@ namespace appTest.HAL
         protected bool _enabled;
         protected Cpu.Pin _pin;
         protected PortType _mode;
+        protected DeviceType _type;
 
         public virtual bool Enabled
         {

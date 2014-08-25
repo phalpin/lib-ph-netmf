@@ -30,10 +30,18 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>appTest.Program</StartupObject>
+  </PropertyGroup>
   <Import Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
   <ItemGroup>
     <Compile Include="Debug\Log.cs" />
+    <Compile Include="Example.cs" />
+    <Compile Include="HAL\Analog\AnalogDevice.cs" />
+    <Compile Include="HAL\Analog\InputDevice.cs" />
+    <Compile Include="HAL\Delegates\Delegates.cs" />
     <Compile Include="HAL\Device.cs" />
+    <Compile Include="HAL\DeviceType.cs" />
     <Compile Include="HAL\Digital\ActionDevice.cs" />
     <Compile Include="HAL\Digital\DigitalDevice.cs" />
     <Compile Include="HAL\Digital\OutputDevice.cs" />
@@ -49,10 +57,9 @@
     <Reference Include="Microsoft.SPOT.Native" />
     <Reference Include="Microsoft.SPOT.Net" />
     <Reference Include="SecretLabs.NETMF.Hardware" />
+    <Reference Include="SecretLabs.NETMF.Hardware.AnalogInput, Version=4.2.2.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="SecretLabs.NETMF.Hardware.NetduinoPlus" />
     <Reference Include="System" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="HAL\Analog\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>

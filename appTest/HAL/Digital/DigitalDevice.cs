@@ -16,6 +16,7 @@ namespace appTest.HAL.Digital
             Pin = pin;
             Mode = type;
             Enabled = initialState;
+            _type = DeviceType.Digital;
         }
 
         protected void DisposePorts()
