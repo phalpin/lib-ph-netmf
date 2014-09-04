@@ -33,7 +33,7 @@ namespace appTest
             button = new ActionDevice(Pins.ONBOARD_SW1, true);
             led = new OutputDevice(Pins.ONBOARD_LED, false);
             lightSensor = new HAL.Analog.InputDevice(Pins.GPIO_PIN_A0, "LightSensor", true, 5, 3f, 150f);
-            lightSensor.PercentageNotification = 0.1f;
+            lightSensor.PercentageNotification = 0.5f;
             lightSensor.Debug = false;
 
             button.onAction += (d1, d2, time) =>
