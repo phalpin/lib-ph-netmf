@@ -15,7 +15,8 @@ namespace appTest
     {
         static ActionDevice button;
         static OutputDevice led;
-        static HAL.Analog.InputDevice lightSensor;
+        //static TriggeredInputDevice distanceSensor;
+        //static HAL.Analog.InputDevice lightSensor;
 
         public static void Main()
         {
@@ -32,27 +33,29 @@ namespace appTest
 
             button = new ActionDevice(Pins.ONBOARD_SW1, true);
             led = new OutputDevice(Pins.ONBOARD_LED, false);
-            lightSensor = new HAL.Analog.InputDevice(Pins.GPIO_PIN_A0, "LightSensor", true, 5, 3f, 150f);
-            lightSensor.PercentageNotification = 0.1f;
-            lightSensor.Debug = false;
+            //distanceSensor = new TriggeredInputDevice(PWMChannels.PWM_PIN_D3, Pins.GPIO_PIN_D0, false);
+            //lightSensor = new HAL.Analog.InputDevice(Pins.GPIO_PIN_A0, "LightSensor", true, 5, 3f, 150f);
+            //lightSensor.PercentageNotification = 0.1f;
+            //lightSensor.Debug = false;
 
             button.onAction += (d1, d2, time) =>
             {
-                lightSensor.Debug = !lightSensor.Debug;
                 led.Enabled = !led.Enabled;
+                //distanceSensor.Enabled = !distanceSensor.Enabled;
             };
 
-            lightSensor.onAnalogValueChange += (oldValue, newValue) => 
-            {
-                Debugging.Log.Info("Over", lightSensor.PercentageNotification * 10, " percent change detected in light. Old Value =", oldValue, "| NewValue =", newValue);
-            };
+            //lightSensor.onAnalogValueChange += (oldValue, newValue) => 
+            //{
+            //    Debugging.Log.Info("Over", lightSensor.PercentageNotification * 10, " percent change detected in light. Old Value =", oldValue, "| NewValue =", newValue);
+            //};
         }
 
         
 
         public static void MainLoop()
         {
-            lightSensor.Read();
+            //lightSensor.Read();
+            distanceSensor.Render();
         }
 
     }
