@@ -8,6 +8,7 @@ using SecretLabs.NETMF.Hardware;
 using SecretLabs.NETMF.Hardware.NetduinoPlus;
 using appTest.HAL.Digital;
 using appTest.HAL;
+using appTest.HAL.Digital.DistanceSensors;
 
 namespace appTest
 {
@@ -15,8 +16,8 @@ namespace appTest
     {
         static ActionDevice button;
         static OutputDevice led;
-        //static TriggeredInputDevice distanceSensor;
-        //static HAL.Analog.InputDevice lightSensor;
+        static OutputDevice speaker;
+        static HC_SR04 distanceSensor;
 
         public static void Main()
         {
@@ -33,28 +34,26 @@ namespace appTest
 
             button = new ActionDevice(Pins.ONBOARD_SW1, true);
             led = new OutputDevice(Pins.ONBOARD_LED, false);
-            //distanceSensor = new TriggeredInputDevice(PWMChannels.PWM_PIN_D3, Pins.GPIO_PIN_D0, false);
-            //lightSensor = new HAL.Analog.InputDevice(Pins.GPIO_PIN_A0, "LightSensor", true, 5, 3f, 150f);
-            //lightSensor.PercentageNotification = 0.1f;
-            //lightSensor.Debug = false;
+            distanceSensor = new HC_SR04(Pins.GPIO_PIN_D0, Pins.GPIO_PIN_D3, true, 20, 2.0F);
+            speaker = new OutputDevice(Pins.GPIO_PIN_D6, false);
 
             button.onAction += (d1, d2, time) =>
             {
                 led.Enabled = !led.Enabled;
-                //distanceSensor.Enabled = !distanceSensor.Enabled;
+                distanceSensor.Debug = !distanceSensor.Debug;
             };
 
-            //lightSensor.onAnalogValueChange += (oldValue, newValue) => 
-            //{
-            //    Debugging.Log.Info("Over", lightSensor.PercentageNotification * 10, " percent change detected in light. Old Value =", oldValue, "| NewValue =", newValue);
-            //};
+            distanceSensor.onMeasurementReceived += (oldVal, newVal) =>
+            {
+                Debugging.Log.Info("New Reading: ", newVal, "cm");
+                speaker.Enabled = newVal > 20;
+            };
         }
 
         
 
         public static void MainLoop()
         {
-            //lightSensor.Read();
             distanceSensor.Render();
         }
 

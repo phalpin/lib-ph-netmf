@@ -10,7 +10,6 @@ namespace appTest.HAL.Analog
         protected SecretLabs.NETMF.Hardware.AnalogInput _inputPort = null;
 
         public string Name { get; set; }
-        public bool Debug { get; set; }
         public float CurrentValue { get; set; }
 
         public AnalogDevice(Cpu.Pin pin, PortType type, bool initialState, string name)

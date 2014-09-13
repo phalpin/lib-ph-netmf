@@ -48,5 +48,7 @@ namespace appTest.HAL
                 _mode = value;
             }
         }
+
+        public bool Debug { get; set; }
     }
 }

@@ -43,11 +43,11 @@
     <Compile Include="HAL\DeviceType.cs" />
     <Compile Include="HAL\Digital\ActionDevice.cs" />
     <Compile Include="HAL\Digital\DigitalDevice.cs" />
+    <Compile Include="HAL\Digital\DistanceSensors\HC_SR04.cs" />
     <Compile Include="HAL\Digital\OutputDevice.cs" />
-    <Compile Include="HAL\Digital\TriggeredInputDevice.cs" />
     <Compile Include="HAL\PinManager.cs" />
     <Compile Include="HAL\PortType.cs" />
-    <Compile Include="HWLib\DistanceSensor.cs" />
+    <Compile Include="HAL\ThreadExt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
   </ItemGroup>
