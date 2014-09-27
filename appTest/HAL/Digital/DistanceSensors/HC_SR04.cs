@@ -24,6 +24,7 @@ namespace appTest.HAL.Digital.DistanceSensors
         protected float MeasurementTolerance { get; set; }
         protected int CurrentMeasurement { get; set; }
         protected int MeasurementsToAverage { get; set; }
+        protected int InvalidMeasurements { get; set; }
         
 
         public HC_SR04(Cpu.Pin trigPin, Cpu.Pin echoPin, bool initialState, int sampleAmount, float faultTol) : base(trigPin, PortType.Output, initialState)
@@ -81,7 +82,21 @@ namespace appTest.HAL.Digital.DistanceSensors
 
         protected bool IsValidReading(long meas)
         {
-            return (SumMeasurements / CurrentMeasurement) * MeasurementTolerance >= meas;
+            bool retVal = (SumMeasurements / CurrentMeasurement) * MeasurementTolerance >= meas;
+
+            if (!retVal)
+            {
+                InvalidMeasurements++;
+                if (InvalidMeasurements == 5)
+                {
+                    InvalidMeasurements = 0;
+                    SumMeasurements = 0;
+                    CurrentMeasurement = 0;
+                    return true;
+                }
+            }
+
+            return retVal;
         }
 
         protected void MeasurementReceivedNotify(float newValue)

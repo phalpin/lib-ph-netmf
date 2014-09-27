@@ -16,8 +16,8 @@ namespace appTest
     {
         static ActionDevice button;
         static OutputDevice led;
-        static OutputDevice speaker;
         static HC_SR04 distanceSensor;
+        static PWM speaker;
 
         public static void Main()
         {
@@ -34,8 +34,10 @@ namespace appTest
 
             button = new ActionDevice(Pins.ONBOARD_SW1, true);
             led = new OutputDevice(Pins.ONBOARD_LED, false);
-            distanceSensor = new HC_SR04(Pins.GPIO_PIN_D0, Pins.GPIO_PIN_D3, true, 20, 2.0F);
-            speaker = new OutputDevice(Pins.GPIO_PIN_D6, false);
+            distanceSensor = new HC_SR04(Pins.GPIO_PIN_D0, Pins.GPIO_PIN_D3, true, 40, 2.0F);
+            //Pin, Freq, Duty Cycle
+            speaker = new PWM(SecretLabs.NETMF.Hardware.NetduinoPlus.PWMChannels.PWM_PIN_D6, 600, 0, false);
+            speaker.Start();
 
             button.onAction += (d1, d2, time) =>
             {
@@ -46,8 +48,53 @@ namespace appTest
             distanceSensor.onMeasurementReceived += (oldVal, newVal) =>
             {
                 Debugging.Log.Info("New Reading: ", newVal, "cm");
-                speaker.Enabled = newVal > 20;
+
+                SetSpeaker(newVal);
+                
+                //if (newVal.InRange(0,20))
+                //{
+                //    SetSpeaker(300, 0.1);
+                //}
+                //else if (newVal.InRange(20, 40))
+                //{
+                //    SetSpeaker(300, 0.05);
+                //}
+                //else if (newVal.InRange(40, 80))
+                //{
+                //    SetSpeaker(300, 0.01);
+                //}
+                //else if (newVal.InRange(80, 100))
+                //{
+                //    SetSpeaker(300, 0.005);
+                //}
+                //else if (newVal.InRange(100, 120))
+                //{
+                //    SetSpeaker(300, 0.001);
+                //}
+                //else
+                //{
+                //    speaker.Stop();
+                //}
             };
+
+            
+        }
+
+        public static void SetSpeaker(float newVal){
+            if (newVal >= 120)
+            {
+                speaker.Stop();
+            }
+            else if (newVal <= 1)
+            {
+                speaker.Start();
+                speaker.DutyCycle = 0.1;
+            }
+            else
+            {
+                speaker.Start();
+                speaker.DutyCycle = (120 - newVal) * 0.0008333F;
+            }
         }
 
         

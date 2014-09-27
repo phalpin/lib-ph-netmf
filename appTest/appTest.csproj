@@ -36,6 +36,7 @@
   <Import Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
   <ItemGroup>
     <Compile Include="Debugging\Log.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="HAL\Analog\AnalogDevice.cs" />
     <Compile Include="HAL\Analog\InputDevice.cs" />
     <Compile Include="HAL\Delegates\Delegates.cs" />
